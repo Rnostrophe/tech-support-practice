@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.HashMap;
 /**
  * The responder class represents a response generator object.
@@ -10,39 +8,47 @@ import java.util.HashMap;
  */
 public class Responder
 {
-    private ArrayList<String> responses;
-    private Random generator;
+    private HashMap<String,String> responseMap;
     /**
      * Construct a Responder - nothing to do
      */
     public Responder()
     {
-        generator = new Random();
-        responses = new ArrayList<>();
+        responseMap = new HashMap();
         fillResponses();
     }
     
     private void fillResponses()
     {
-        responses.add("That does not sound good...");
-        responses.add("An ambulance is coming shortly");
-        responses.add("Please elaborate");
-        responses.add("Sorry, communication isn't clear, please repeat");
-        responses.add("Dear god...");
-        responses.add("Lord have mercy...");
-        responses.add("You want pizza?");
-        responses.add("Tell me more");
-        responses.add("Help is on the way!");
+        responseMap.put("I'm hurt", "That does not sound good...");
+        responseMap.put("I'm hurt", "An ambulance is coming shortly");
+        responseMap.put("Help", "Please elaborate");
+        responseMap.put("Smoke", "Sorry, communication isn't clear, please repeat");
+        responseMap.put("Someone's dead", "Dear god...");
+        responseMap.put("Someone's dead", "Lord have mercy...");
+        responseMap.put("Help", "Tell me more");
+        responseMap.put("Smoke", "Help is on the way!");
+        responseMap.put("Smoke", "You should call 911");
+    }
+    private String pickDefaultResponse()
+    {
+        return "That sounds interesting. Tell me more...";
     }
     /**
      * Generate a response.
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse()
+    public String generateResponse(String input)
     {
-        int index = generator.nextInt(responses.size());
-        String response = responses.get(index);
-        return "That sounds interesting. Tell me more...";
+        String response = responseMap.get(input);
+        /*for (String word : words)
+        {
+            response = responseMap.get(word);
+        }*/
+        if (response == null){
+            pickDefaultResponse();
+        }
+        return response;
     }
 }
 
